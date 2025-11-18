@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kurama SmartTech</title>
+  <style>
+    
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #0e0e0e;
+  color: #fff;
+  line-height: 1.6;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(145deg, #00ffe7, #0e0e0e);
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.hero p {
+  margin: 1rem 0;
+  color: #ccc;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #00ffe7;
+  color: #000;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #00c9b7;
+}
+
+/* Product Grid */
+.product-section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.product-grid a {
+  display: block;
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-grid a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 255, 231, 0.2);
+  color: #00ffe7;
+}
+
+.card {
+  background: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,255,231,0.1);
+}
+
+    </style>
+</head>
+<body>
+
+  <!-- Reusable Navbar -->
+  <div id="navbar"></div>
+  <link rel="stylesheet" href="kurama-smarttech/nav-bar.css" />
+
+  <!-- Hero Section --> 
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Smart Tech, Smarter Living</h1>
+      <p>Shop the latest smartphones, smartwatches, laptops, and gadgets — curated for you.</p>
+      <a href="Product-page.html" class="btn">Browse Products</a>
+    </div>
+  </section>
+
+  <!-- Product Grid Placeholder -->
+  <section class="product-section" id="products">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+      <!-- Placeholder cards -->
+      <a href="#" class="card">Smartphone</a>
+      <a href="#" class="card">Smartwatch</a>
+      <a href="#" class="card">Laptop</a>
+      <a href="#" class="card">Earbuds</a>
+      <a href="#" class="card">Drone</a>
+      <a href="#" class="card">All</a>
+    </div>
+  </section>
+
+  <!-- Reusable Footer -->
+  <div id="footer"></div>
+  <link rel="stylesheet" href="kurama-smarttech/footer.css" />
+
+  <!-- Scripts -->
+  <script>
+    // Load reusable navbar and footer
+fetch("nav-bar.html").then(res => res.text()).then(data => {
+  document.getElementById("navbar").innerHTML = data;
+});
+
+fetch("footer.html").then(res => res.text()).then(data => {
+  document.getElementById("footer").innerHTML = data;
+});
+
+  </script>
+</body>
+</html>
+ 
