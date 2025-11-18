@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Footer - Kurama SmartTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .footer {
+      background: linear-gradient(135deg, #0a0a0a 0%, #111 100%);
+      color: #ccc;
+      padding: 4rem 1.5rem 1.5rem;
+      font-family: "Segoe UI", sans-serif;
+      border-top: 1px solid rgba(0, 255, 231, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #00ffe7, transparent);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-logo h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00ffe7, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-logo span {
+      color: #fff;
+    }
+
+    .footer-logo p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: #999;
+      line-height: 1.6;
+    }
+
+    .footer-about {
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-about p {
+      font-size: 0.9rem;
+      color: #999;
+      line-height: 1.6;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 231, 0.2);
+      border-radius: 8px;
+      color: #00ffe7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #00ffe7;
+      color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 231, 0.3);
+    }
+
+    .footer-section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: #00ffe7;
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+      color: #00ffe7;
+      transform: translateX(5px);
+    }
+
+    .footer-links a i {
+      font-size: 0.8rem;
+      width: 16px;
+    }
+
+    .footer-contact ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-contact li {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .footer-contact i {
+      color: #00ffe7;
+      width: 16px;
+      margin-top: 0.1rem;
+    }
+
+    .footer-contact a {
+      color: #00ffe7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-contact a:hover {
+      color: #00ccbf;
+      text-decoration: underline;
+    }
+
+    .newsletter-form {
+      margin-top: 1rem;
+    }
+
+    .newsletter-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(0, 255, 231, 0.3);
+      background: rgba(30, 30, 30, 0.8);
+      color: #fff;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: #00ffe7;
+      box-shadow: 0 0 0 2px rgba(0, 255, 231, 0.2);
+    }
+
+    .newsletter-btn {
+      width: 100%;
+      background: #00ffe7;
+      color: #000;
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .newsletter-btn:hover {
+      background: #00ccbf;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p {
+      font-size: 0.85rem;
+      color: #666;
+      margin: 0;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-legal a {
+      color: #666;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-legal a:hover {
+      color: #00ffe7;
+    }
+
+    /* Payment Methods */
+    .payment-methods {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        padding: 3rem 1rem 1rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+      }
+
+      .footer-section h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .footer-social {
+        justify-content: center;
+      }
+
+      .footer-links a {
+        justify-content: center;
+      }
+
+      .footer-contact li {
+        justify-content: center;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .footer-legal {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-social {
+        gap: 0.8rem;
+      }
+
+      .social-link {
+        width: 36px;
+        height: 36px;
+      }
+
+      .payment-methods {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Company Info Section -->
+      <div class="footer-about">
+        <div class="footer-logo">
+          <h2>Kurama<span>SmartTech</span></h2>
+          <p>Smart Device, Smarter Living. Tech you can trust. Powered by innovation.</p>
+        </div>
+        
+        <p>We deliver cutting-edge technology solutions that enhance everyday life through innovative smart devices and exceptional customer experiences.</p>
+        
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="Twitter">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="YouTube">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="social-link" aria-label="YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links Section -->
+      <div class="footer-section footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="home-page.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="product-all.html"><i class="fas fa-chevron-right"></i> Products</a></li>
+          <li><a href="about-page.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="support.html"><i class="fas fa-chevron-right"></i> Support Center</a></li>
+          <li><a href="blog.html"><i class="fas fa-chevron-right"></i> Tech Blog</a></li>
+          <li><a href="careers.html"><i class="fas fa-chevron-right"></i> Careers</a></li>
+        </ul>
+      </div>
+
+      <!-- Customer Service Section -->
+      <div class="footer-section footer-links">
+        <h3>Customer Service</h3>
+        <ul>
+          <li><a href="shipping-policy.html"><i class="fas fa-chevron-right"></i> Shipping Policy</a></li>
+          <li><a href="return-policy.html"><i class="fas fa-chevron-right"></i> Return Policy</a></li>
+          <li><a href="warranty.html"><i class="fas fa-chevron-right"></i> Warranty Info</a></li>
+          <li><a href="Faq-page.html"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+          <li><a href="track-order.html"><i class="fas fa-chevron-right"></i> Track Order</a></li>
+          <li><a href="size-guide.html"><i class="fas fa-chevron-right"></i> Size Guide</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Newsletter Section -->
+      <div class="footer-section footer-contact">
+        <h3>Contact & Newsletter</h3>
+        <ul>
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:Kuramasmarttech@gmail.com">Kuramasmarttech@gmail.com</a>
+          </li>
+          <li>
+            <i class="fas fa-phone"></i>
+            <a href="tel:+2348139984260">+234 813 998 4260</a>
+          </li>
+          <li>
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Maiduguri, Nigeria.</span>
+          </li>
+          <li>
+            <i class="fas fa-clock"></i>
+            <span>24/7</span>
+          </li>
+        </ul>
+
+        <div class="newsletter-form">
+          <p style="font-size: 0.9rem; color: #999; margin-bottom: 1rem;">Subscribe for tech updates & offers</p>
+          <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+          <button type="submit" class="newsletter-btn">
+            <i class="fas fa-paper-plane"></i> Subscribe
+          </button>
+        </div>
+
+        <div class="payment-methods">
+          <div class="payment-icon">Visa</div>
+          <div class="payment-icon">Verve</div>
+          <div class="payment-icon">PayPal</div>
+          <div class="payment-icon">BTC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Kurama SmartTech.</p>
+      <div class="footer-legal">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="Disclaimer-page.html">Disclaimer</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Newsletter form handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const newsletterForm = document.querySelector('.newsletter-form');
+      const newsletterInput = document.querySelector('.newsletter-input');
+      const newsletterBtn = document.querySelector('.newsletter-btn');
+
+      newsletterBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const email = newsletterInput.value.trim();
+        
+        if (email === '') {
+          showNewsletterMessage('Please enter your email address', 'error');
+          return;
+        }
+
+        if (!isValidEmail(email)) {
+          showNewsletterMessage('Please enter a valid email address', 'error');
+          return;
+        }
+
+        // Simulate newsletter subscription
+        showNewsletterMessage('Thank you for subscribing to our newsletter!', 'success');
+        newsletterInput.value = '';
+        
+        // In a real application, you would send this to your backend
+        console.log('Newsletter subscription:', email);
+      });
+
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      function showNewsletterMessage(message, type) {
+        // Remove existing message if any
+        const existingMessage = document.querySelector('.newsletter-message');
+        if (existingMessage) {
+          existingMessage.remove();
+        }
+
+        const messageEl = document.createElement('div');
+        messageEl.className = `newsletter-message ${type}`;
+        messageEl.textContent = message;
+        messageEl.style.cssText = `
+          margin-top: 0.5rem;
+          padding: 0.5rem;
+          border-radius: 4px;
+          font-size: 0.8rem;
+          text-align: center;
+          background: ${type === 'success' ? 'rgba(0, 255, 231, 0.1)' : 'rgba(255, 100, 100, 0.1)'};
+          color: ${type === 'success' ? '#00ffe7' : '#ff6b6b'};
+          border: 1px solid ${type === 'success' ? 'rgba(0, 255, 231, 0.3)' : 'rgba(255, 100, 100, 0.3)'};
+        `;
+
+        newsletterForm.appendChild(messageEl);
+
+        // Remove message after 5 seconds
+        setTimeout(() => {
+          if (messageEl.parentNode) {
+            messageEl.remove();
+          }
+        }, 5000);
+      }
+    });
+  </script>
+</body>
+</html>

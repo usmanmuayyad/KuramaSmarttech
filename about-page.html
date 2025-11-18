@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Kurama SmartTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Hero Section */
+    .about-hero {
+      background: linear-gradient(135deg, rgba(0, 255, 231, 0.1) 0%, #0e0e0e 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(0, 255, 231, 0.05) 0%, transparent 50%);
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #00ffe7, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .about-hero .tagline {
+      font-size: 1.3rem;
+      color: #00ffe7;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .about-hero p {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: #111;
+      padding: 4rem 2rem;
+    }
+
+    .stats-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 231, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 255, 231, 0.3);
+      box-shadow: 0 8px 25px rgba(0, 255, 231, 0.1);
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      color: #00ffe7;
+      margin-bottom: 1rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #00ffe7;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #ccc;
+      font-size: 1rem;
+    }
+
+    /* Mission Section */
+    .mission-section {
+      padding: 5rem 2rem;
+      background: #0e0e0e;
+    }
+
+    .mission-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 3rem;
+      color: #fff;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: #00ffe7;
+    }
+
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .mission-card {
+      background: rgba(26, 26, 26, 0.8);
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #00ffe7;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .mission-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .mission-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 255, 231, 0.15);
+    }
+
+    .mission-icon {
+      font-size: 3rem;
+      color: #00ffe7;
+      margin-bottom: 1.5rem;
+    }
+
+    .mission-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .mission-card p {
+      color: #ccc;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Values Section */
+    .values-section {
+      padding: 5rem 2rem;
+      background: #111;
+    }
+
+    .values-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .value-card {
+      background: rgba(30, 30, 30, 0.8);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 231, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .value-card:hover {
+      border-color: rgba(0, 255, 231, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .value-icon {
+      font-size: 2.5rem;
+      color: #00ffe7;
+      margin-bottom: 1rem;
+    }
+
+    .value-card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .value-card p {
+      color: #ccc;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Team Section */
+    .team-section {
+      padding: 5rem 2rem;
+      background: #0e0e0e;
+    }
+
+    .team-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .team-member {
+      text-align: center;
+      background: rgba(26, 26, 26, 0.8);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 255, 231, 0.2);
+    }
+
+    .member-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00ffe7, #00ccbf);
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: #000;
+    }
+
+    .member-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .member-role {
+      color: #00ffe7;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .member-bio {
+      color: #ccc;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, rgba(0, 255, 231, 0.1) 0%, #111 100%);
+      text-align: center;
+    }
+
+    .cta-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .cta-description {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: #00ffe7;
+      color: #000;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #00ccbf;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 231, 0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #00ffe7;
+      border: 1px solid #00ffe7;
+    }
+
+    .btn-secondary:hover {
+      background: #00ffe7;
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .about-hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .about-hero .tagline {
+        font-size: 1.1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-hero {
+        padding: 3rem 1rem;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr;
+      }
+
+      .mission-section,
+      .values-section,
+      .team-section {
+        padding: 3rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body> 
+  <!-- Navbar -->
+  <div id="nav-bar"></div>
+
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <div class="hero-content">
+      <h1>About Kurama SmartTech</h1>
+      <p class="tagline">Your Premier Marketplace for Smart Technology</p>
+      <p>
+        Kurama SmartTech is Nigeria's leading marketplace for cutting-edge smartphones, smart accessories, 
+        and innovative tech gadgets. We bridge the gap between global technology trends and local accessibility, 
+        empowering individuals and businesses with reliable, affordable smart solutions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-number">10,000+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Products Available</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-shipping-fast"></i>
+        </div>
+        <div class="stat-number">36+</div>
+        <div class="stat-label">Cities Served</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-award"></i>
+        </div>
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Customer Satisfaction</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="mission-section">
+    <div class="mission-container">
+      <h2 class="section-title">Our Core Principles</h2>
+      <div class="mission-grid">
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3>Our Mission</h3>
+          <p>
+            To democratize access to cutting-edge technology by providing affordable, reliable smart devices 
+            and accessories that enhance daily life and drive digital transformation across Africa.
+          </p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3>Our Vision</h3>
+          <p>
+            To become Africa's most trusted smart technology marketplace, recognized for innovation, 
+            customer satisfaction, and our commitment to bridging the digital divide.
+          </p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3>Our Promise</h3>
+          <p>
+            Quality assurance, genuine products, competitive pricing, and exceptional customer service. 
+            We stand behind every product we sell with comprehensive warranty and support.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="values-section">
+    <div class="values-container">
+      <h2 class="section-title">Why Choose Kurama SmartTech?</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h4>Quality Assurance</h4>
+          <p>
+            Every product undergoes rigorous quality checks to ensure you receive only genuine, 
+            high-performance devices that meet international standards.
+          </p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h4>Latest Technology</h4>
+          <p>
+            Stay ahead with the newest smartphones, smartwatches, and innovative gadgets 
+            from leading global brands and emerging tech innovators.
+          </p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-shipping-fast"></i>
+          </div>
+          <h4>Fast Delivery</h4>
+          <p>
+            Nationwide delivery with multiple shipping options. Get your tech products 
+            delivered quickly and securely to your doorstep.
+          </p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h4>Expert Support</h4>
+          <p>
+            Our tech-savvy customer support team is available to help you choose the right 
+            products and provide after-sales assistance.
+          </p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h4>Secure Shopping</h4>
+          <p>
+            Shop with confidence using our secure payment gateway with Paystack integration. 
+            Your financial information is always protected.
+          </p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-tags"></i>
+          </div>
+          <h4>Best Prices</h4>
+          <p>
+            Competitive pricing without compromising quality. We work directly with suppliers 
+            to bring you the best value for your money.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Categories Section -->
+  <section class="mission-section">
+    <div class="mission-container">
+      <h2 class="section-title">What We Offer</h2>
+      <div class="mission-grid">
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Smartphones</h3>
+          <p>
+            Latest Android and iOS devices from top brands like Samsung, Apple, 
+            Tecno, Infinix, and more with various price ranges and specifications.
+          </p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3>Smartwatches</h3>
+          <p>
+            Feature-rich smartwatches and fitness trackers that keep you connected 
+            and help you maintain a healthy, active lifestyle.
+          </p>
+        </div>
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-headphones"></i>
+          </div>
+          <h3>Accessories</h3>
+          <p>
+            Premium phone cases, screen protectors, chargers, cables, wireless earbuds, 
+            and other essential accessories to enhance your device experience.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="team-container">
+      <h2 class="section-title">Our Commitment</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-avatar">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <div class="member-name">Innovation Driven</div>
+          <div class="member-role">Always Evolving</div>
+          <div class="member-bio">
+            We continuously explore new technologies and trends to bring you the most 
+            advanced and relevant smart products in the market.
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-avatar">
+            <i class="fas fa-heart"></i>
+          </div>
+          <div class="member-name">Customer First</div>
+          <div class="member-role">Your Satisfaction Matters</div>
+          <div class="member-bio">
+            Every decision we make is guided by what's best for our customers. 
+            Your trust and satisfaction are our top priorities.
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-avatar">
+            <i class="fas fa-globe-africa"></i>
+          </div>
+          <div class="member-name">African Focus</div>
+          <div class="member-role">Local Understanding</div>
+          <div class="member-bio">
+            We understand the unique needs and challenges of the African market 
+            and tailor our products and services accordingly.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2 class="cta-title">Ready to Experience Smart Living?</h2>
+      <p class="cta-description">
+        Join thousands of satisfied customers who trust Kurama SmartTech for their technology needs.
+      </p>
+      <div class="cta-buttons">
+        <a href="product-all.html" class="btn btn-primary">
+          <i class="fas fa-shopping-cart"></i> Shop Now
+        </a>
+        <a href="contact-page.html" class="btn btn-secondary">
+          <i class="fas fa-envelope"></i> Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
+    fetch("nav-bar.html")   
+      .then(res => res.text())
+      .then(data => document.getElementById("nav-bar").innerHTML = data);
+  </script>
+</body>
+</html>

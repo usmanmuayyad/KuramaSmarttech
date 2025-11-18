@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop | Kurama SmartTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 3rem 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 255, 231, 0.05) 0%, rgba(14, 14, 14, 1) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 20%, rgba(0, 255, 231, 0.1) 0%, transparent 50%);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #00ffe7, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      color: #a0a0a0;
+    }
+
+    /* Filter Bar */
+    .filter-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .filter-bar {
+      background: rgba(26, 26, 26, 0.8);
+      padding: 1.5rem;
+      border-radius: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 255, 231, 0.1);
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #a0a0a0;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 231, 0.3);
+      background: rgba(30, 30, 30, 0.8);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    #searchInput:focus {
+      outline: none;
+      border-color: #00ffe7;
+      box-shadow: 0 0 0 2px rgba(0, 255, 231, 0.2);
+    }
+
+    .price-filter {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .price-filter label {
+      color: #a0a0a0;
+      font-weight: 500;
+    }
+
+    .price-filter input {
+      width: 100px;
+      padding: 0.6rem;
+      border-radius: 8px;
+      background: rgba(30, 30, 30, 0.8);
+      color: #fff;
+      border: 1px solid rgba(0, 255, 231, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .price-filter input:focus {
+      outline: none;
+      border-color: #00ffe7;
+      box-shadow: 0 0 0 2px rgba(0, 255, 231, 0.2);
+    }
+
+    .category-buttons {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(30, 30, 30, 0.8);
+      color: #00ffe7;
+      border: 1px solid rgba(0, 255, 231, 0.3);
+      padding: 0.7rem 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filter-btn i {
+      font-size: 0.9rem;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: #00ffe7;
+      color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 231, 0.3);
+    }
+
+    /* Product Grid */
+    .product-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: #1e1e1e;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 255, 231, 0.15);
+      border-color: rgba(0, 255, 231, 0.3);
+    }
+
+    .product-image {
+      position: relative;
+      overflow: hidden;
+      height: 220px;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #00ffe7;
+      color: #000;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .product-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-category {
+      color: #a0a0a0;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .product-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+
+    .product-description {
+      color: #a0a0a0;
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+
+    .product-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #00ffe7;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .btn {
+      flex: 1;
+      background: transparent;
+      color: #00ffe7;
+      border: 1px solid #00ffe7;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #00ffe7;
+      color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 231, 0.3);
+    }
+
+    .btn-primary {
+      background: #00ffe7;
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background: #00ccbf;
+    }
+
+    /* Results Counter */
+    .results-counter {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #a0a0a0;
+      font-size: 1rem;
+    }
+
+    /* Cart Notification */
+    .cart-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #00ffe7;
+      color: #000;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+      font-weight: 600;
+      transform: translateX(150%);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cart-notification.show {
+      transform: translateX(0);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        min-width: 100%;
+      }
+
+      .price-filter {
+        justify-content: space-between;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .cart-notification {
+        right: 10px;
+        left: 10px;
+        bottom: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 2rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+
+      .filter-section,
+      .product-section {
+        padding: 1rem;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Premium Tech Collection</h1>
+    <p>Discover our curated selection of cutting-edge smartphones, smartwatches, and innovative gadgets</p>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="filter-bar">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search products...">
+      </div>
+      
+      <div class="price-filter">
+        <label>Price:</label>
+        <input type="number" id="minPrice" placeholder="Min">
+        <span>-</span>
+        <input type="number" id="maxPrice" placeholder="Max">
+      </div>
+
+      <div class="category-buttons">
+        <button class="filter-btn active" data-category="all">
+          <i class="fas fa-th-large"></i> All
+        </button>
+        <button class="filter-btn" data-category="smartphones">
+          <i class="fas fa-mobile-alt"></i> Phones
+        </button>
+        <button class="filter-btn" data-category="smartwatches">
+          <i class="fas fa-clock"></i> Watches
+        </button>
+        <button class="filter-btn" data-category="accessories">
+          <i class="fas fa-headphones"></i> Accessories
+        </button>
+        <button class="filter-btn" data-category="gadgets">
+          <i class="fas fa-gamepad"></i> Gadgets
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="product-section">
+    <div class="results-counter" id="resultsCounter">Showing 6 products</div>
+    
+    <div class="product-grid" id="productGrid">
+      <!-- Product 1 -->
+      <div class="product-card" data-category="smartphones" data-name="Galaxy S24 Ultra" data-price="1200" data-id="galaxy_s24_ultra">
+        <div class="product-image">
+          <img src="image/iphone Earphone.jpg" alt="Galaxy S24 Ultra">
+          <span class="product-badge">New</span>
+        </div>
+        <div class="product-content">
+          <div class="product-category">Accessories</div>
+          <h3 class="product-title">iphone Earphone</h3>
+          <p class="product-description">Loud Bass.</p>
+          <div class="product-price">₦2,500</div>
+          <div class="btn-group">
+            <button class="btn add-to-cart-btn">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn btn-primary">
+              <i class="fas fa-bolt"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card" data-category="smartwatches" data-name="Apple Watch Series 9" data-price="399" data-id="apple_watch_series_9">
+        <div class="product-image">
+          <img src="image/itel Power Bank.jpg" alt="Apple Watch Series 9">
+          <span class="product-badge">Best Seller</span>
+        </div>
+        <div class="product-content">
+          <div class="product-category">Smartwatches</div>
+          <h3 class="product-title">Airtel Power Bank</h3>
+          <p class="product-description">Long Lasting Power Storage.</p>
+          <div class="product-price">₦14,500</div>
+          <div class="btn-group">
+            <button class="btn add-to-cart-btn">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn btn-primary">
+              <i class="fas fa-bolt"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card" data-category="accessories" data-name="Type-C Fast Charger" data-price="49" data-id="type_c_fast_charger">
+        <div class="product-image">
+          <img src="17.jpg" alt="Type-C Fast Charger">
+        </div>
+        <div class="product-content">
+          <div class="product-category">Accessories</div>
+          <h3 class="product-title">Type-C Fast Charger</h3>
+          <p class="product-description">Charge your devices at lightning speed with our premium Type-C Fast Charger.</p>
+          <div class="product-price">₦49</div>
+          <div class="btn-group">
+            <button class="btn add-to-cart-btn">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn btn-primary">
+              <i class="fas fa-bolt"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card" data-category="gadgets" data-name="VR Headset Pro" data-price="320" data-id="vr_headset_pro">
+        <div class="product-image">
+          <img src="3.jpg" alt="VR Headset Pro">
+          <span class="product-badge">Sale</span>
+        </div>
+        <div class="product-content">
+          <div class="product-category">Gadgets</div>
+          <h3 class="product-title">VR Headset Pro</h3>
+          <p class="product-description">Immerse yourself in virtual worlds with our high-performance VR Headset Pro.</p>
+          <div class="product-price">₦320</div>
+          <div class="btn-group">
+            <button class="btn add-to-cart-btn">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn btn-primary">
+              <i class="fas fa-bolt"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card" data-category="smartphones" data-name="iPhone 15 Pro Max" data-price="1300" data-id="iphone_15_pro_max">
+        <div class="product-image">
+          <img src="images/iphone-15-pro-max.jpg" alt="iPhone 15 Pro Max">
+          <span class="product-badge">Premium</span>
+        </div>
+        <div class="product-content">
+          <div class="product-category">Smartphones</div>
+          <h3 class="product-title">iPhone 15 Pro Max</h3>
+          <p class="product-description">The ultimate iPhone experience with cutting-edge technology and stunning design.</p>
+          <div class="product-price">₦1300</div>
+          <div class="btn-group">
+            <button class="btn add-to-cart-btn">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn btn-primary">
+              <i class="fas fa-bolt"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="product-card" data-category="accessories" data-name="Wireless Earbuds Pro" data-price="179" data-id="wireless_earbuds_pro">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1590658165737-15a047b8b5e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Wireless Earbuds Pro">
+        </div>
+        <div class="product-content">
+          <div class="product-category">Accessories</div>
+          <h3 class="product-title">Wireless Earbuds Pro</h3>
+          <p class="product-description">Premium sound quality with active noise cancellation for immersive audio experience.</p>
+          <div class="product-price">₦179</div>
+          <div class="btn-group">
+            <button class="btn add-to-cart-btn">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn btn-primary">
+              <i class="fas fa-bolt"></i> Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Notification -->
+  <div class="cart-notification" id="cartNotification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notificationMessage"></span>
+  </div>
+
+  <script>
+    // Load navbar
+    fetch("nav-bar.html").then(res => res.text()).then(data => {
+      document.getElementById("navbar").innerHTML = data;
+      // Initialize cart count after navbar loads
+      updateCartCount();
+    });
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+    const searchInput = document.getElementById('searchInput');
+    const minPriceInput = document.getElementById('minPrice');
+    const maxPriceInput = document.getElementById('maxPrice');
+    const resultsCounter = document.getElementById('resultsCounter');
+    const cartNotification = document.getElementById('cartNotification');
+    const notificationMessage = document.getElementById('notificationMessage');
+
+    let selectedCategory = "all";
+
+    function applyFilters() {
+      const searchValue = searchInput.value.toLowerCase();
+      const minPrice = parseFloat(minPriceInput.value) || 0;
+      const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+      let visibleCount = 0;
+
+      productCards.forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const price = parseFloat(card.dataset.price);
+        const category = card.dataset.category;
+
+        const matchesSearch = name.includes(searchValue);
+        const matchesPrice = price >= minPrice && price <= maxPrice;
+        const matchesCategory = selectedCategory === "all" || category === selectedCategory;
+
+        const shouldShow = matchesSearch && matchesPrice && matchesCategory;
+        card.style.display = shouldShow ? "flex" : "none";
+        
+        if (shouldShow) visibleCount++;
+      });
+
+      // Update results counter
+      resultsCounter.textContent = `Showing ${visibleCount} product${visibleCount !== 1 ? 's' : ''}`;
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedCategory = btn.dataset.category;
+        applyFilters();
+      });
+    });
+
+    [searchInput, minPriceInput, maxPriceInput].forEach(input => {
+      input.addEventListener("input", applyFilters);
+    });
+
+    // Add to cart functionality
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const productCard = this.closest('.product-card');
+        const productId = productCard.dataset.id;
+        const productName = productCard.querySelector('.product-title').textContent;
+        const productPrice = parseFloat(productCard.dataset.price);
+        const productImage = productCard.querySelector('img').src;
+        const productCategory = productCard.dataset.category;
+        
+        addToCart(productId, productName, productPrice, productImage, productCategory);
+      });
+    });
+
+    // Function to add item to cart
+    function addToCart(id, name, price, image, category) {
+      // Check if item already exists in cart
+      const existingItem = cart.find(item => item.id === id);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: id,
+          name: name,
+          price: price,
+          image: image,
+          category: category,
+          quantity: 1
+        });
+      }
+      
+      // Save updated cart to localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Show notification
+      showNotification(`${name} added to cart!`);
+      
+      // Update cart count
+      updateCartCount();
+      
+      // Trigger cart update event for navbar
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+
+    // Show notification
+    function showNotification(message) {
+      notificationMessage.textContent = message;
+      cartNotification.classList.add('show');
+      
+      // Hide after 3 seconds
+      setTimeout(() => {
+        cartNotification.classList.remove('show');
+      }, 3000);
+    }
+
+    // Update cart count
+    function updateCartCount() {
+      const cartCountElement = document.getElementById('cartCount');
+      if (cartCountElement) {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountElement.textContent = totalItems;
+        cartCountElement.style.display = totalItems > 0 ? 'flex' : 'none';
+        
+        // Add pulse animation when count changes
+        if (totalItems > 0) {
+          cartCountElement.classList.add('pulse');
+          setTimeout(() => {
+            cartCountElement.classList.remove('pulse');
+          }, 500);
+        }
+      }
+    }
+
+    // Listen for cart updates from other tabs
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'cart') {
+        cart = JSON.parse(e.newValue) || [];
+        updateCartCount();
+      }
+    });
+
+    // Listen for cart updates within the same tab
+    window.addEventListener('cartUpdated', function() {
+      cart = JSON.parse(localStorage.getItem('cart')) || [];
+      updateCartCount();
+    });
+
+    // Buy Now button functionality
+    document.querySelectorAll('.btn-primary').forEach(button => {
+      button.addEventListener('click', function() {
+        const productCard = this.closest('.product-card');
+        const productId = productCard.dataset.id;
+        const productName = productCard.querySelector('.product-title').textContent;
+        const productPrice = parseFloat(productCard.dataset.price);
+        const productImage = productCard.querySelector('img').src;
+        const productCategory = productCard.dataset.category;
+        
+        // Add to cart first
+        addToCart(productId, productName, productPrice, productImage, productCategory);
+        
+        // Then redirect to cart page
+        setTimeout(() => {
+          window.location.href = 'cart.html';
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>
