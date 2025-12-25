@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Price Log</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0e0e0e;
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e6ef;
+        }
+
+        h1 {
+            color: #00ffe7;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #6f7b7c;
+            font-size: 1rem;
+        }
+
+        .controls-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .search-container {
+            background: #1a2524;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border: 2px solid #e0e6ef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #00ffe7;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .search-info {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #1a2524;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: #00ffe7;
+            color: 00ffe7 #2c3e50;
+        }
+
+        .btn-primary:hover {
+            background-color: #3aa79c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #00ffe7;
+            color: #2c3e50;
+            border: 1px solid #0e0e0e;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .edit-mode-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #458d86;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: #00ffe7;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #00ffe7;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .table-container {
+            background: #1a2524;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #2c3e50;
+            color: white;
+            border-bottom: 1px solid #00ffe7;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+            user-select: none;
+        }
+
+        th.sortable {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        th.sortable:hover {
+            background-color: #1f5751;
+        }
+
+        th i {
+            margin-left: 8px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #00ffe7;
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #376e691a;
+        }
+
+        td {
+            padding: 16px 15px;
+            color: #bdc3c7;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .edit-btn {
+            background-color: #458d86;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .delete-btn {
+            background-color: #c0392b;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32815;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #bdc3c7;
+        }
+
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #00ffe7 #1a2524;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 10px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .summary-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #458d86;
+        }
+
+        .summary-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .edit-mode {
+            background-color: #273f3d;
+        }
+
+        .editable {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .editable:hover {
+            background-color: #1f5751;
+        }
+
+        .editable:after {
+            content: "\f044";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            color: #356686;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .edit-mode .editable:hover:after {
+            opacity: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #273f3d;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e6ef;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e6ef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #00ffe7;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-hint {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-cancel {
+            background-color: #d32815;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-save {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background-color: #27ae60;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .has-error .form-control {
+            border-color: #e74c3c;
+        }
+
+        .has-error .error-message {
+            display: block;
+        }
+
+        .auto-profit {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+
+        .auto-profit span {
+            font-weight: 600;
+            color: #2ecc71;
+        }
+
+        @media (max-width: 768px) {
+            .controls-container {
+                flex-direction: column;
+            }
+            
+            .search-container, .buttons-container {
+                min-width: 100%;
+            }
+            
+            th, td {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .summary {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .summary-item {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                padding: 8px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .summary-item:last-child {
+                border-bottom: none;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+            
+            .actions-cell {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-list-alt"></i> Product Price Log</h1>
+            <p class="subtitle">Customer-facing view with search, editing, and product management</p>
+        </header>
+
+        <div class="controls-container">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by product name, number, or price...">
+                    <div class="search-info">Search across Product Name, Item No., and Selling Price</div>
+                </div>
+            </div>
+            
+            <div class="buttons-container">
+                <button class="btn btn-primary" id="addProductBtn">
+                    <i class="fas fa-plus-circle"></i> Add New Product
+                </button>
+                <div class="edit-mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="editModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Edit Mode</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="priceTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" data-sort="no">No. <i class="fas fa-sort"></i></th>
+                        <th class="sortable" data-sort="items">Items <i class="fas fa-sort"></i></th>
+                        <th class="sortable" data-sort="selling">Selling Price <i class="fas fa-sort"></i></th>
+                        <th class="sortable" data-sort="date">Date <i class="fas fa-sort"></i></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Table rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+            <div id="noResults" class="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No products found</h3>
+                <p>Try adjusting your search terms or add a new product</p>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-item">
+                <span class="summary-value" id="totalItems">0</span>
+                <span class="summary-label">Total Products</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-value" id="visibleItems">0</span>
+                <span class="summary-label">Visible Products</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-value">4</span>
+                <span class="summary-label">Searchable Fields</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="addProductModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New Product</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label class="form-label" for="productName">Product Name *</label>
+                    <input type="text" id="productName" class="form-control" placeholder="Enter product name">
+                    <div class="error-message" id="nameError">Product name is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="buyingPrice">Buying Price *</label>
+                    <input type="number" id="buyingPrice" class="form-control" placeholder="Enter buying price" min="0" step="1">
+                    <div class="error-message" id="buyingError">Valid buying price is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="sellingPrice">Selling Price *</label>
+                    <input type="number" id="sellingPrice" class="form-control" placeholder="Enter selling price" min="0" step="1">
+                    <div class="error-message" id="sellingError">Valid selling price is required</div>
+                    <div class="auto-profit" id="profitDisplay">Profit: <span>0</span></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="productDate">Date</label>
+                    <input type="date" id="productDate" class="form-control">
+                    <div class="form-hint">Leave empty for today's date</div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-save">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Price log data from your Excel file
+        let priceData = [
+            {no: 1, items: "Anti Break (Privacy)", buying: 500, selling: 1000, profit: 500, date: ""},
+            {no: 2, items: "Anti Break (Normal)", buying: 200, selling: 500, profit: 300, date: "19/6/2025"},
+            {no: 3, items: "RECRSI USB Cable - Type C", buying: 750, selling: 1300, profit: 550, date: "19/6/2025"},
+            {no: 4, items: "RECRSI USB Cable - Iphone", buying: 750, selling: 1300, profit: 550, date: "19/6/2025"},
+            {no: 5, items: "RECRSI 10-in-1 USB Adapter", buying: 4500, selling: 8000, profit: 3500, date: "19/6/2025"},
+            {no: 6, items: "RECRSI USB Adapter", buying: 7000, selling: 9000, profit: 2000, date: "19/6/2025"},
+            {no: 7, items: "RECRSI USB Cable - Normal", buying: 750, selling: 1300, profit: 550, date: "19/6/2025"},
+            {no: 8, items: "Terrot USB Cable - iphone", buying: 800, selling: 1000, profit: 200, date: "19/6/2025"},
+            {no: 9, items: "Oraimo Colored USB Cable - Type C", buying: 800, selling: 1000, profit: 200, date: "19/6/2025"},
+            {no: 10, items: "Oraimo Colored USB Cable - Normal", buying: 800, selling: 1000, profit: 200, date: "19/6/2025"},
+            {no: 11, items: "Oraimo USB Adapter - Type C & Normal", buying: 7000, selling: 9000, profit: 2000, date: "19/6/2025"},
+            {no: 12, items: "Oraimo Earphone", buying: 750, selling: 800, profit: 50, date: "19/6/2025"},
+            {no: 13, items: "Oraimo Mini 5s B-T", buying: 4000, selling: 8000, profit: 4000, date: "19/6/2025"},
+            {no: 14, items: "Oraimo Dual Adapter - Normal", buying: 1000, selling: 2000, profit: 1000, date: "19/6/2025"},
+            {no: 15, items: "Hands Free- I love Music", buying: 450, selling: 600, profit: 150, date: "19/6/2025"},
+            {no: 16, items: "D3T Usb cable - Normal", buying: 900, selling: 1000, profit: 100, date: "19/6/2025"},
+            {no: 17, items: "Mikomath USB Cable - Normal", buying: 900, selling: 1000, profit: 100, date: "19/6/2025"},
+            {no: 18, items: "USB-C Cable - Type c to Type C", buying: 1500, selling: 2000, profit: 500, date: "19/6/2025"},
+            {no: 19, items: "USB-C Cable - Type c to iphone", buying: 1500, selling: 2000, profit: 500, date: "19/6/2025"},
+            {no: 20, items: "H@F Speaker - HF1068", buying: 6000, selling: 7000, profit: 1000, date: "19/6/2025"},
+            {no: 21, items: "T&G Portable speaker - T&G 179", buying: 6000, selling: 7000, profit: 1000, date: "19/6/2025"},
+            {no: 22, items: "H@F Speaker - HF119", buying: 8000, selling: 10000, profit: 2000, date: "19/6/2025"},
+            {no: 23, items: "Petsonic Speaker", buying: 6500, selling: 7500, profit: 1000, date: "19/6/2025"},
+            {no: 24, items: "Headphone P9", buying: 8000, selling: 10000, profit: 2000, date: "19/6/2025"},
+            {no: 25, items: "infinix Adapter", buying: 4000, selling: 5500, profit: 1500, date: "19/6/2025"},
+            {no: 26, items: "Silicon Cover", buying: 1800, selling: 2500, profit: 700, date: "19/6/2025"},
+            {no: 27, items: "Universal Earphone - Orange HD", buying: 600, selling: 700, profit: 100, date: "19/6/2025"},
+            {no: 28, items: "Lonio USB Adapter", buying: 500, selling: 1000, profit: 500, date: "19/6/2025"},
+            {no: 29, items: "itel Battery", buying: 800, selling: 1200, profit: 400, date: "19/6/2025"},
+            {no: 30, items: "Tecno Battery", buying: 800, selling: 1200, profit: 400, date: "19/6/2025"},
+            {no: 31, items: "Modern Adapter - Type C to Type C", buying: 1500, selling: 2500, profit: 1000, date: "19/6/2025"},
+            {no: 32, items: "tecno Adapter", buying: 1000, selling: 1500, profit: 500, date: "19/6/2025"},
+            {no: 33, items: "iphone 14 Pro Max USB Adapter", buying: 4500, selling: 7000, profit: 2500, date: "19/6/2025"},
+            {no: 34, items: "Xs Max USB Power Adapter", buying: 4000, selling: 6000, profit: 2000, date: "19/6/2025"},
+            {no: 35, items: "Rolled Earphone", buying: 750, selling: 1000, profit: 250, date: "19/6/2025"},
+            {no: 36, items: "Follow Come Earpiece", buying: 1000, selling: 1500, profit: 500, date: "19/6/2025"},
+            {no: 37, items: "Samsung Super P Adapter", buying: 4500, selling: 6000, profit: 1500, date: "19/6/2025"},
+            {no: 38, items: "Pro 5s", buying: 2700, selling: 4500, profit: 1800, date: "19/6/2025"},
+            {no: 39, items: "Oraimo Mini 5s B-T", buying: 4000, selling: 6000, profit: 2000, date: "19/6/2025"},
+            {no: 40, items: "Amazon Adapter", buying: 2000, selling: 2500, profit: 500, date: "45754"},
+            {no: 41, items: "TecnoAdapter", buying: 2000, selling: 2500, profit: 500, date: "45754"},
+            {no: 42, items: "infinix Adapter", buying: 2500, selling: 3000, profit: 500, date: "45784"},
+            {no: 43, items: "Oraimo Cable", buying: 800, selling: 1000, profit: 200, date: "45937"},
+            {no: 44, items: "Calus Battery", buying: 800, selling: 1200, profit: 400, date: "13/8/2025"},
+            {no: 45, items: "Oraimo Earphone", buying: 600, selling: 800, profit: 200, date: "13/8/2025"},
+            {no: 46, items: "Fezziri USB Cable", buying: 800, selling: 1500, profit: 700, date: "13/8/2025"},
+            {no: 47, items: "Rexi 4 in 1 USB Cable", buying: 1200, selling: 2000, profit: 800, date: "18/8/2025"},
+            {no: 48, items: "Rexi USB Cable", buying: 800, selling: 1500, profit: 700, date: "18/8/2025"},
+            {no: 49, items: "Flash Card 64GB", buying: 8000, selling: 9000, profit: 1000, date: "25/12/2025"}
+        ];
+
+        // App state
+        let currentData = [...priceData];
+        let sortColumn = 'no';
+        let sortDirection = 'asc';
+        let editMode = false;
+
+        // DOM elements
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+        const editModeToggle = document.getElementById('editModeToggle');
+        const noResults = document.getElementById('noResults');
+        const totalItemsEl = document.getElementById('totalItems');
+        const visibleItemsEl = document.getElementById('visibleItems');
+        const addProductBtn = document.getElementById('addProductBtn');
+        const addProductModal = document.getElementById('addProductModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const addProductForm = document.getElementById('addProductForm');
+        const productNameInput = document.getElementById('productName');
+        const buyingPriceInput = document.getElementById('buyingPrice');
+        const sellingPriceInput = document.getElementById('sellingPrice');
+        const productDateInput = document.getElementById('productDate');
+        const profitDisplay = document.getElementById('profitDisplay');
+        const nameError = document.getElementById('nameError');
+        const buyingError = document.getElementById('buyingError');
+        const sellingError = document.getElementById('sellingError');
+
+        // Initialize the app
+        function init() {
+            updateSummary();
+            renderTable();
+            setupEventListeners();
+            setupModal();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Search input
+            searchInput.addEventListener('input', handleSearch);
+            
+            // Edit mode toggle
+            editModeToggle.addEventListener('change', toggleEditMode);
+            
+            // Sortable table headers
+            document.querySelectorAll('.sortable').forEach(header => {
+                header.addEventListener('click', () => {
+                    const column = header.getAttribute('data-sort');
+                    sortTable(column);
+                });
+            });
+            
+            // Add product button
+            addProductBtn.addEventListener('click', openAddProductModal);
+            
+            // Auto-calculate profit when prices change
+            buyingPriceInput.addEventListener('input', updateProfitDisplay);
+            sellingPriceInput.addEventListener('input', updateProfitDisplay);
+        }
+
+        // Set up modal functionality
+        function setupModal() {
+            // Close modal buttons
+            closeModalBtn.addEventListener('click', closeAddProductModal);
+            cancelBtn.addEventListener('click', closeAddProductModal);
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === addProductModal) {
+                    closeAddProductModal();
+                }
+            });
+            
+            // Form submission
+            addProductForm.addEventListener('submit', handleAddProduct);
+            
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            productDateInput.value = today;
+        }
+
+        // Open add product modal
+        function openAddProductModal() {
+            // Reset form
+            addProductForm.reset();
+            
+            // Reset errors
+            resetFormErrors();
+            
+            // Set today's date
+            const today = new Date().toISOString().split('T')[0];
+            productDateInput.value = today;
+            
+            // Reset profit display
+            updateProfitDisplay();
+            
+            // Show modal
+            addProductModal.style.display = 'flex';
+            
+            // Focus on first input
+            productNameInput.focus();
+        }
+
+        // Close add product modal
+        function closeAddProductModal() {
+            addProductModal.style.display = 'none';
+            resetFormErrors();
+        }
+
+        // Reset form errors
+        function resetFormErrors() {
+            productNameInput.parentElement.classList.remove('has-error');
+            buyingPriceInput.parentElement.classList.remove('has-error');
+            sellingPriceInput.parentElement.classList.remove('has-error');
+        }
+
+        // Update profit display
+        function updateProfitDisplay() {
+            const buying = parseFloat(buyingPriceInput.value) || 0;
+            const selling = parseFloat(sellingPriceInput.value) || 0;
+            const profit = selling - buying;
+            
+            profitDisplay.innerHTML = `Profit: <span>${profit.toLocaleString()}</span>`;
+            
+            // Change color based on profit
+            if (profit < 0) {
+                profitDisplay.querySelector('span').style.color = '#e74c3c';
+            } else if (profit === 0) {
+                profitDisplay.querySelector('span').style.color = '#f39c12';
+            } else {
+                profitDisplay.querySelector('span').style.color = '#2ecc71';
+            }
+        }
+
+        // Handle add product form submission
+        function handleAddProduct(e) {
+            e.preventDefault();
+            
+            // Reset errors
+            resetFormErrors();
+            
+            // Get form values
+            const name = productNameInput.value.trim();
+            const buying = parseFloat(buyingPriceInput.value);
+            const selling = parseFloat(sellingPriceInput.value);
+            const dateInput = productDateInput.value;
+            
+            // Validate form
+            let isValid = true;
+            
+            if (!name) {
+                productNameInput.parentElement.classList.add('has-error');
+                isValid = false;
+            }
+            
+            if (isNaN(buying) || buying < 0) {
+                buyingPriceInput.parentElement.classList.add('has-error');
+                isValid = false;
+            }
+            
+            if (isNaN(selling) || selling < 0) {
+                sellingPriceInput.parentElement.classList.add('has-error');
+                isValid = false;
+            }
+            
+            if (selling <= buying) {
+                sellingPriceInput.parentElement.classList.add('has-error');
+                sellingError.textContent = 'Selling price must be greater than buying price';
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Calculate next product number
+            const nextNo = priceData.length > 0 ? Math.max(...priceData.map(p => p.no)) + 1 : 1;
+            
+            // Format date
+            let formattedDate = '';
+            if (dateInput) {
+                const date = new Date(dateInput);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                formattedDate = `${day}/${month}/${year}`;
+            }
+            
+            // Create new product
+            const newProduct = {
+                no: nextNo,
+                items: name,
+                buying: buying,
+                selling: selling,
+                profit: selling - buying,
+                date: formattedDate
+            };
+            
+            // Add to data
+            priceData.push(newProduct);
+            currentData = [...priceData];
+            
+            // Update UI
+            renderTable();
+            updateSummary();
+            closeAddProductModal();
+            
+            // Show success message
+            showNotification(`Product "${name}" added successfully!`, 'success');
+            
+            // Clear search if active
+            if (searchInput.value.trim()) {
+                searchInput.value = '';
+                handleSearch();
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            // Remove existing notifications
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            // Style the notification
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: ${type === 'success' ? '#2ecc71' : '#e74c3c'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 1001;
+                animation: slideIn 0.3s;
+            `;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Handle search
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                currentData = [...priceData];
+            } else {
+                currentData = priceData.filter(item => {
+                    return (
+                        item.no.toString().includes(searchTerm) ||
+                        item.items.toLowerCase().includes(searchTerm) ||
+                        item.selling.toString().includes(searchTerm) ||
+                        item.date.toLowerCase().includes(searchTerm)
+                    );
+                });
+            }
+            
+            renderTable();
+            updateSummary();
+        }
+
+        // Sort table
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+            
+            currentData.sort((a, b) => {
+                let aValue = a[column];
+                let bValue = b[column];
+                
+                // Handle numeric sorting for no and selling columns
+                if (column === 'no' || column === 'selling') {
+                    aValue = Number(aValue);
+                    bValue = Number(bValue);
+                }
+                
+                // Handle date sorting
+                if (column === 'date') {
+                    // Try to parse dates
+                    const aDate = parseDate(aValue);
+                    const bDate = parseDate(bValue);
+                    
+                    if (aDate && bDate) {
+                        aValue = aDate;
+                        bValue = bDate;
+                    }
+                }
+                
+                if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+                if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+            
+            renderTable();
+            updateSortIcons();
+        }
+
+        // Helper function to parse dates
+        function parseDate(dateStr) {
+            if (!dateStr) return null;
+            
+            // Check if it's a date in format dd/mm/yyyy
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1;
+                const year = parseInt(parts[2], 10);
+                return new Date(year, month, day);
+            }
+            
+            // Check if it's an Excel serial date (like 45754)
+            const excelSerial = parseInt(dateStr, 10);
+            if (!isNaN(excelSerial) && excelSerial > 25569) {
+                // Excel serial date to JavaScript date
+                const utcDays = Math.floor(excelSerial - 25569);
+                const utcValue = utcDays * 86400 * 1000;
+                const dateInfo = new Date(utcValue);
+                return dateInfo;
+            }
+            
+            return null;
+        }
+
+        // Update sort icons
+        function updateSortIcons() {
+            document.querySelectorAll('.sortable i').forEach(icon => {
+                icon.className = 'fas fa-sort';
+            });
+            
+            const activeHeader = document.querySelector(`.sortable[data-sort="${sortColumn}"] i`);
+            if (activeHeader) {
+                activeHeader.className = sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
+            }
+        }
+
+        // Toggle edit mode
+        function toggleEditMode() {
+            editMode = editModeToggle.checked;
+            document.body.classList.toggle('edit-mode', editMode);
+            
+            // Re-render table to update editability
+            renderTable();
+        }
+
+        // Delete product
+        function deleteProduct(productNo) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                // Remove from data
+                priceData = priceData.filter(item => item.no !== productNo);
+                currentData = currentData.filter(item => item.no !== productNo);
+                
+                // Update UI
+                renderTable();
+                updateSummary();
+                
+                // Show notification
+                showNotification('Product deleted successfully!', 'success');
+            }
+        }
+
+        // Edit product inline
+        function editProductInline(cell, property, index, productNo) {
+            if (!editMode) return;
+            
+            const originalValue = cell.textContent;
+            
+            // Create input element
+            const input = document.createElement('input');
+            input.type = property === 'selling' ? 'number' : 'text';
+            input.value = originalValue;
+            input.className = 'edit-input';
+            
+            // Style the input
+            input.style.width = '100%';
+            input.style.padding = '8px';
+            input.style.border = '2px solid #3498db';
+            input.style.borderRadius = '4px';
+            input.style.fontSize = 'inherit';
+            
+            // Replace cell content with input
+            cell.textContent = '';
+            cell.appendChild(input);
+            input.focus();
+            input.select();
+            
+            // Handle input completion
+            const finishEdit = () => {
+                const newValue = input.value.trim();
+                
+                if (newValue !== originalValue) {
+                    // Find the actual product index in priceData
+                    const actualIndex = priceData.findIndex(item => item.no === productNo);
+                    
+                    if (actualIndex !== -1) {
+                        // Update data
+                        if (property === 'selling') {
+                            const numericValue = parseInt(newValue) || 0;
+                            priceData[actualIndex][property] = numericValue;
+                            priceData[actualIndex].profit = numericValue - priceData[actualIndex].buying;
+                        } else {
+                            priceData[actualIndex][property] = newValue;
+                        }
+                        
+                        // Update currentData if in search mode
+                        if (searchInput.value.trim() !== '') {
+                            const currentIndex = currentData.findIndex(item => item.no === productNo);
+                            if (currentIndex !== -1) {
+                                currentData[currentIndex][property] = priceData[actualIndex][property];
+                                if (property === 'selling') {
+                                    currentData[currentIndex].profit = priceData[actualIndex].profit;
+                                }
+                            }
+                        }
+                        
+                        cell.textContent = formatCellValue(newValue, property);
+                        
+                        // Show notification
+                        showNotification('Product updated successfully!', 'success');
+                    }
+                } else {
+                    cell.textContent = originalValue;
+                }
+                
+                // Re-attach edit handler
+                if (editMode) {
+                    cell.classList.add('editable');
+                    cell.addEventListener('click', () => editProductInline(cell, property, index, productNo));
+                }
+            };
+            
+            input.addEventListener('blur', finishEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    finishEdit();
+                } else if (e.key === 'Escape') {
+                    cell.textContent = originalValue;
+                    if (editMode) {
+                        cell.classList.add('editable');
+                        cell.addEventListener('click', () => editProductInline(cell, property, index, productNo));
+                    }
+                }
+            });
+        }
+
+        // Format cell value for display
+        function formatCellValue(value, property) {
+            if (property === 'selling') {
+                return new Intl.NumberFormat('en-US').format(value);
+            }
+            return value;
+        }
+
+        // Format date for display
+        function formatDate(dateStr) {
+            if (!dateStr) return "";
+            
+            // Check if it's an Excel serial date (like 45754)
+            const excelSerial = parseInt(dateStr, 10);
+            if (!isNaN(excelSerial) && excelSerial > 25569) {
+                // Excel serial date to JavaScript date
+                const utcDays = Math.floor(excelSerial - 25569);
+                const utcValue = utcDays * 86400 * 1000;
+                const dateInfo = new Date(utcValue);
+                
+                // Format as dd/mm/yyyy
+                const day = String(dateInfo.getDate()).padStart(2, '0');
+                const month = String(dateInfo.getMonth() + 1).padStart(2, '0');
+                const year = dateInfo.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
+            
+            return dateStr;
+        }
+
+        // Render table
+        function renderTable() {
+            tableBody.innerHTML = '';
+            
+            if (currentData.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            currentData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                // No. cell
+                const noCell = document.createElement('td');
+                noCell.textContent = item.no;
+                row.appendChild(noCell);
+                
+                // Items cell
+                const itemsCell = document.createElement('td');
+                itemsCell.textContent = item.items;
+                row.appendChild(itemsCell);
+                
+                // Selling Price cell
+                const sellingCell = document.createElement('td');
+                sellingCell.textContent = formatCellValue(item.selling, 'selling');
+                row.appendChild(sellingCell);
+                
+                // Date cell
+                const dateCell = document.createElement('td');
+                dateCell.textContent = formatDate(item.date);
+                row.appendChild(dateCell);
+                
+                // Actions cell
+                const actionsCell = document.createElement('td');
+                actionsCell.className = 'actions-cell';
+                
+                // Edit button
+                const editBtn = document.createElement('button');
+                editBtn.className = 'action-btn edit-btn';
+                editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+                editBtn.addEventListener('click', () => {
+                    // Make the product name editable
+                    editProductInline(itemsCell, 'items', index, item.no);
+                });
+                
+                // Delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'action-btn delete-btn';
+                deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+                deleteBtn.addEventListener('click', () => {
+                    deleteProduct(item.no);
+                });
+                
+                actionsCell.appendChild(editBtn);
+                actionsCell.appendChild(deleteBtn);
+                row.appendChild(actionsCell);
+                
+                // Make cells editable if in edit mode
+                if (editMode) {
+                    itemsCell.classList.add('editable');
+                    sellingCell.classList.add('editable');
+                    dateCell.classList.add('editable');
+                    
+                    itemsCell.addEventListener('click', () => editProductInline(itemsCell, 'items', index, item.no));
+                    sellingCell.addEventListener('click', () => editProductInline(sellingCell, 'selling', index, item.no));
+                    dateCell.addEventListener('click', () => editProductInline(dateCell, 'date', index, item.no));
+                }
+                
+                tableBody.appendChild(row);
+            });
+            
+            updateSortIcons();
+        }
+
+        // Update summary
+        function updateSummary() {
+            totalItemsEl.textContent = priceData.length;
+            visibleItemsEl.textContent = currentData.length;
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
